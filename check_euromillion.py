@@ -1,26 +1,27 @@
+# -*- coding: utf-8 -*-
 import requests
 import datetime
 
-# URL de l'API des résultats de l'Euromillion (utilisation de l'API publique)
+# URL de l'API des rÃ©sultats de l'Euromillion (utilisation de l'API publique)
 euromillion_url = "https://api.loto-api.fr/v1/euromillion/latest"
 
-# Fonction pour vérifier la cagnotte et envoyer la notification si elle dépasse 100 millions
+# Fonction pour vÃ©rifier la cagnotte et envoyer la notification si elle dÃ©passe 100 millions
 def check_euromillion():
-    # Appel de l'API pour obtenir les derniers résultats
+    # Appel de l'API pour obtenir les derniers rÃ©sultats
     response = requests.get(euromillion_url)
     data = response.json()
 
-    # Vérifier la cagnotte (on suppose que l'API renvoie une clé 'jackpot' en millions d'euros)
+    # VÃ©rifier la cagnotte (on suppose que l'API renvoie une clÃ© 'jackpot' en millions d'euros)
     jackpot = data['jackpot']
 
-    # Si la cagnotte dépasse 100 millions
+    # Si la cagnotte dÃ©passe 100 millions
     if jackpot > 100:
         # Envoi de la notification via NTFY
-        message = f"La cagnotte de l'Euromillion est à {jackpot} millions d'euros !"
+        message = f"La cagnotte de l'Euromillion est Ã  {jackpot} millions d'euros !"
         requests.post(f"https://ntfy.sh/euromillion", data=message.encode('utf-8'))
-        print("Notification envoyée !")
+        print("Notification envoyÃ©e !")
     else:
-        print("Cagnotte inférieure à 100 millions.")
+        print("Cagnotte infÃ©rieure Ã  100 millions.")
 
-# Exécution
+# ExÃ©cution
 check_euromillion()
