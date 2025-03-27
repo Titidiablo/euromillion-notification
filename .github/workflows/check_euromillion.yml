@@ -1,0 +1,24 @@
+name: Vérifier la cagnotte de l'Euromillion
+
+on:
+  schedule:
+    # Planification tous les lundi (0) et jeudi (3) à 8h00 UTC
+    - cron: '0 8 * * 1,4'  # Lundi et Jeudi à 8h00 UTC
+  workflow_dispatch:  # Permet d'exécuter manuellement si besoin
+
+jobs:
+  check-cagnotte:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Vérifier la cagnotte de l'Euromillion
+      uses: actions/checkout@v2
+    
+    - name: Installer Python et Requests
+      run: |
+        sudo apt update
+        sudo apt install python3-pip
+        pip3 install requests
+
+    - name: Exécuter le script Python
+      run: python3 check_euromillion.py
